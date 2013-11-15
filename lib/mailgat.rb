@@ -1,6 +1,6 @@
 require "rest-client"
 require "json"
-require "multimap"
+# require "multimap"
 
 # require "mailgun/mailgun_error"
 # require "mailgun/base"
@@ -16,9 +16,33 @@ require "multimap"
 # require "mailgun/message"
 
 #require "startup"
+class Mailgat
 
-def Mailgat(options={})
-  options[:api_key] = Mailgat.api_key if Mailgat.api_key
-  options[:domain] = Mailgat.domain if Mailgat.domain
-  Mailgat::Base.new(options)
+  attr_accessor :host, :protocol, :api_version, :test_mode, :api_key, :domain
+
+
+  def initialize(params={})
+    @host         = params.fetch(:host, "api.mailgun.net")
+    @protocol     = params.fetch(:protocol, "https")
+    @api_version  = params.fetch(:api_version, "v2")
+    @test_mode    = params.fetch(:test_mode, false)
+    @api_key      = params.fetch(:api_key) { raise ArgumentError.new(":api_key is a required argument to initialize Mailgat") if api_key.nil?}
+    @domain       = params.fetch(:domain, nil)
+  end
+
+  def find_list
+
+  end
+
+
+  # returns the last raw json response
+  def response
+
+  end
+
+  # Returns the base url used in all Mailgun API calls
+  def api_url
+    "#{protocol}://api:#{api_key}@#{host}/#{api_version}"
+  end
+    
 end

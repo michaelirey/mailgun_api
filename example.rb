@@ -1,42 +1,70 @@
 require 'mailgat'
 require 'rest_client'
 
-Mailgat.configure do |config|
-  config.api_key = 'key-79l7h-xnypifsdv975-686go-uhsj8h9'
-  config.domain  = 'evanta.mailgun.org'
-end
 
-@mailgat = Mailgat()
+@mailgat = Mailgat.new(api_key: 'key-xxxxxxxxxxxxxxxx', domain: 'evanta.mailgun.org')
 
 
+### Lists
+
+# get all lists on account
+@mailgat.lists
+
+# find a list by name
+@list = @mailgat.find_list("list_name")
 
 # create_mailing_list
-@mailgat.lists.create("list_name")
-
-# set list to use
-@mailgat.list_members.use("list_name")
-
-# add_list_member
-@mailgat.list_members.add("michael.irey@gmail.com")
-
-# add_list_members
-@mailgat.list_members.add('[{"address": "Alice <alice@example.com>", "vars": {"age": 26}},{"name": "Bob", "address": "bob@example.com", "vars": {"age": 34}}]')
-
-# update_member
-@mailgat.list_members.update("...")
-
-# list_members
+@list = @mailgat.create_list("list_name")
 
 
+
+# Fetches the list of mailing list members.
+@list.members
 
 # get_list_stats
-
-# remove_member
+@list.stats
 
 # remove_list
+@list.delete
+
+# Update mailing list properties
+@list.update({name: "new_list_name"})
 
 
+### List Members
 
+# Find a mailing list member
+@list.find_member("michael.irey@gmail.com")
+
+# add_list_member
+@list.add_member("michael.irey@gmail.com")
+
+# add_list_members
+@list.add_member([{"address": "Alice <alice@example.com>", "vars": {"age": 26}},{"name": "Bob", "address": "bob@example.com", "vars": {"age": 34}}])
+
+# update_member
+@list.update_member("...")
+
+# remove_member from list
+@list.remove_member("michael.irey@gmail.com")
+
+# will efficiently add/remove/update the list given with the list at mailgun.
+@list.sync_members([{"address": "Alice <alice@example.com>"}, {"etc.."}])
+
+
+### Members
+
+# find all lists a member belongs to
+@member.lists
+
+
+### Messages
+
+# Create a message
+@message = @mailgat.create_message({})
+
+# Send a message to a list
+@list.send_message(@message, when: "Fri, 25 Oct 2011 23:10:10 -0000")
 
 
 

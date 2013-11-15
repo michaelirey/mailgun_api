@@ -3,7 +3,7 @@ module Mailgat
   # Mailing List functionality
   # Refer http://documentation.mailgun.net/api-mailinglists.html for optional parameters
 
-  class MailingList
+  class List
     # Used internally, called from Mailgun::Base
     def initialize(mailgun)
       @mailgun = mailgun
