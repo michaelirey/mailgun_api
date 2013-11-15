@@ -1,17 +1,17 @@
-module Mailgat
+module Gat
 
   # Mailing List functionality
   # Refer http://documentation.mailgun.net/api-mailinglists.html for optional parameters
 
   class List
     # Used internally, called from Mailgun::Base
-    def initialize(mailgun)
-      @mailgun = mailgun
+    def initialize(mailgat)
+      @mailgat = mailgat
     end
 
     # List all mailing lists
     def list(options={})
-      response = Mailgun.submit(:get, list_url, options)["items"] || []
+      response = Mailgat.fire(:get, list_url, options)["items"] || []
     end
 
     # List a single mailing list by a given address
@@ -42,7 +42,7 @@ module Mailgat
 
     # Helper method to generate the proper url for Mailgun mailbox API calls
     def list_url(address=nil)
-      "#{@mailgun.base_url}/lists#{'/' + address if address}"
+      "#{@mailgat.api_url}/lists#{'/' + address if address}"
     end
     
   end

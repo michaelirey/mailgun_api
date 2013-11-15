@@ -11,7 +11,7 @@ require "json"
 # require "mailgun/unsubscribe"
 # require "mailgun/complaint"
 # require "mailgun/log"
-# require "mailgun/list"
+require "mailgat/list"
 # require "mailgun/list/member"
 # require "mailgun/message"
 
@@ -19,7 +19,6 @@ require "json"
 class Mailgat
 
   attr_accessor :host, :protocol, :api_version, :test_mode, :api_key, :domain
-
 
   def initialize(params={})
     @host         = params.fetch(:host, "api.mailgun.net")
@@ -31,7 +30,11 @@ class Mailgat
   end
 
   def find_list
+    Mailgat.fire
+  end
 
+  def lists
+    Gat::List.new(self).list
   end
 
 
@@ -45,4 +48,15 @@ class Mailgat
     "#{protocol}://api:#{api_key}@#{host}/#{api_version}"
   end
     
+
+  def self.fire(method, url, parameters={})
+
+    # puts method
+    # puts url
+    # puts parameters
+
+    parameters = {:params => parameters} if method == :get
+    return JSON(RestClient.send(method, url, parameters))
+  end
+
 end
