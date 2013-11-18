@@ -1,4 +1,5 @@
 require 'pry'
+# require 'active_support/hash_with_indifferent_access'
 
 module Gun
 
@@ -88,6 +89,35 @@ module Gun
     end
 
 
+
+    # def sync_members(members)
+
+    #   # get all members
+    #   current_members = [] 
+    #   self.members.each do |member|
+    #     hash_member = member.deep_symbolize_keys
+    #     current_members << hash_member
+    #   end
+
+    #   # current_members
+    #   binding.pry
+
+    #   # remove extra members
+
+
+
+    #   # add missing members
+
+
+
+    #   # update changes in users
+
+
+
+    # end
+
+
+
     def method_missing(name, *args)
 
       if properties.has_key?(name.to_s)
@@ -99,6 +129,8 @@ module Gun
 
 
     private
+
+
 
     def add_member_by_name(params)
       address = params
