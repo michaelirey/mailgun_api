@@ -1,6 +1,6 @@
 require 'pry'
 
-module Gat
+module Gun
 
   # Mailing List functionality
   # Refer http://documentation.mailgun.net/api-mailinglists.html for optional parameters
@@ -10,47 +10,47 @@ module Gat
     attr_accessor :properties
 
     # Used internally
-    def initialize(mailgat)
-      @mailgat = mailgat
+    def initialize(mailgun)
+      @mailgun = mailgun
     end
 
     # List all mailing lists
     def list(options={})
-      @mailgat.response = Mailgat.fire(:get, list_url, options)["items"] || []
+      @mailgun.response = Mailgun.fire(:get, list_url, options)["items"] || []
     end
 
     # List a single mailing list by a given address
     def find(list_name)
-      @mailgat.response = Mailgat.fire(:get, list_url(list_name))
-      @properties = @mailgat.response["list"]
+      @mailgun.response = Mailgun.fire(:get, list_url(list_name))
+      @properties = @mailgun.response["list"]
     end
 
     # Create a mailing list with a given address
     def create(list_name, options={})
       params = {:address => list_name}
-      @mailgat.response = Mailgat.fire(:post, list_url, params.merge(options))
+      @mailgun.response = Mailgun.fire(:post, list_url, params.merge(options))
     end
 
     # Update a mailing list with a given address
     # with an optional new address, name or description
     def update(params={})
       return unless !params.empty?
-      @mailgat.response = Mailgat.fire(:put, list_url(self.address), params)
+      @mailgun.response = Mailgun.fire(:put, list_url(self.address), params)
     end   
 
     # Deletes a mailing list with a given address
     def delete
-      @mailgat.response = Mailgat.fire(:delete, list_url(self.address))
+      @mailgun.response = Mailgun.fire(:delete, list_url(self.address))
     end
 
 
     def members
-      @mailgat.response = Mailgat.fire(:get, list_url(self.address) + "/members")["items"] || []
+      @mailgun.response = Mailgun.fire(:get, list_url(self.address) + "/members")["items"] || []
     end
 
 
     def stats
-      @mailgat.response = Mailgat.fire(:get, list_url(self.address) + "/stats")
+      @mailgun.response = Mailgun.fire(:get, list_url(self.address) + "/stats")
     end
 
 
@@ -74,17 +74,17 @@ module Gat
 
     def update_member(address, params={})
       return unless !params.empty?
-      @mailgat.response = Mailgat.fire(:put, list_url(self.address) + "/members/#{address}", params)
+      @mailgun.response = Mailgun.fire(:put, list_url(self.address) + "/members/#{address}", params)
     end
 
 
     def find_member(address)
-      @mailgat.response = Mailgat.fire(:get, list_url(self.address) + "/members/#{address}")
+      @mailgun.response = Mailgun.fire(:get, list_url(self.address) + "/members/#{address}")
     end
 
 
     def remove_member(address)
-      @mailgat.response = Mailgat.fire(:delete, list_url(self.address) + "/members/#{address}")
+      @mailgun.response = Mailgun.fire(:delete, list_url(self.address) + "/members/#{address}")
     end
 
 
@@ -104,18 +104,18 @@ module Gat
       address = params
       params = {}
       params[:address] = address
-      @mailgat.response = Mailgat.fire(:post, list_url(self.address) + "/members", params)
+      @mailgun.response = Mailgun.fire(:post, list_url(self.address) + "/members", params)
     end
 
     def add_member_by_hash(params)
-      @mailgat.response = Mailgat.fire(:post, list_url(self.address) + "/members", params)
+      @mailgun.response = Mailgun.fire(:post, list_url(self.address) + "/members", params)
     end
 
 
     def add_members(members)
       params = {}
       params['members'] = members.to_json
-      @mailgat.response = Mailgat.fire(:post, list_url(self.address) + "/members.json", params)
+      @mailgun.response = Mailgun.fire(:post, list_url(self.address) + "/members.json", params)
     end
 
 
@@ -123,7 +123,7 @@ module Gat
 
     # Helper method to generate the proper url for Mailgun mailbox API calls
     def list_url(address=nil)
-      "#{@mailgat.api_url}/lists#{'/' + address if address}"
+      "#{@mailgun.api_url}/lists#{'/' + address if address}"
     end
     
   end

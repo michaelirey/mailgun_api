@@ -1,5 +1,5 @@
 Gem::Specification.new do |s|
-  s.name        = 'mailgat'
+  s.name        = 'mailgun-api'
   s.version     = '0.0.1'
   s.date        = '2013-11-14'
   s.summary     = "Library for the Mailgun API"
@@ -7,9 +7,9 @@ Gem::Specification.new do |s|
   s.authors     = ["Michael Irey"]
   s.email       = 'michael.irey@gmail.com'
   s.files       = `git ls-files`.split("\n")
-  # s.files       = ["lib/mailgat.rb"]
-  # s.files       = ["lib/mailgat.rb", "lib/mailgat/list.rb"]
   s.require_paths = ["lib"]
+  s.add_dependency(%q<json>, [">= 1.5"])
+  s.add_dependency(%q<rest-client>, [">= 1.6"])
   s.homepage    = 'http://rubygems.org/gems/mailgat'
   s.license     = 'MIT'
 end
