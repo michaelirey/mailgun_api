@@ -90,15 +90,11 @@ mailgat exposes the following resources:
 
 ## TODO
 
-  * Coming soon
+  * Message sending
 
 
-## Maintainer
 
-Michael Irey / [@michaelirey](http://github.com/michaelirey)
-
-
-## Authors
+## Author
 
 Michael Irey / [@michaelirey](http://github.com/michaelirey)
 
