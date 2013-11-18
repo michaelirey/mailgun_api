@@ -1,5 +1,5 @@
 Gem::Specification.new do |s|
-  s.name        = 'mailgun-api'
+  s.name        = 'mailgun_api'
   s.version     = '0.0.1'
   s.date        = '2013-11-14'
   s.summary     = "Library for the Mailgun API"
