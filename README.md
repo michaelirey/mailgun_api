@@ -1,7 +1,9 @@
 mailgun_api rubygem
 =======
 
-A library for interfacing with the Mailgun API
+A library for interfacing with the awesome Mailgun API.
+
+See: http://www.mailgun.com/
 
 mailgun_api exposes the following resources:
 
