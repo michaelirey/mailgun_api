@@ -1,24 +1,10 @@
 require "rest-client"
 require "json"
-# require "multimap"
-
-# require "mailgun/mailgun_error"
-# require "mailgun/base"
-# require "mailgun/domain"
-# require "mailgun/route"
-# require "mailgun/mailbox"
-# require "mailgun/bounce"
-# require "mailgun/unsubscribe"
-# require "mailgun/complaint"
-# require "mailgun/log"
 require "mailgat/list"
-# require "mailgun/list/member"
-# require "mailgun/message"
 
-#require "startup"
 class Mailgat
 
-  attr_accessor :host, :protocol, :api_version, :test_mode, :api_key, :domain
+  attr_accessor :host, :protocol, :api_version, :test_mode, :api_key, :domain, :response
 
   def initialize(params={})
     @host         = params.fetch(:host, "api.mailgun.net")
@@ -29,21 +15,22 @@ class Mailgat
     @domain       = params.fetch(:domain, nil)
   end
 
-  def find_list
-    Mailgat.fire
+  def find_list(list_name)
+    list = Gat::List.new(self)
+    list.find("#{list_name}@#{domain}")
+    list
   end
 
   def lists
     Gat::List.new(self).list
   end
 
-
-  # returns the last raw json response
-  def response
-
+  def create_list(list_name, options={})
+    Gat::List.new(self).create("#{list_name}@#{domain}", options)
   end
 
-  # Returns the base url used in all Mailgun API calls
+
+  # Returns the api url used in all Mailgun API calls
   def api_url
     "#{protocol}://api:#{api_key}@#{host}/#{api_version}"
   end
@@ -51,11 +38,12 @@ class Mailgat
 
   def self.fire(method, url, parameters={})
 
-    # puts method
-    # puts url
-    # puts parameters
+    parameters = {:params => parameters} if method == :get    
 
-    parameters = {:params => parameters} if method == :get
+    puts method
+    puts url
+    puts parameters
+
     return JSON(RestClient.send(method, url, parameters))
   end
 
