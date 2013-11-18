@@ -57,7 +57,7 @@ module Gun
     def add_member(params={})
 
       if params.class == String
-        add_member_by_hash(params)
+        add_member_by_name(params)
       end
 
       if params.class == Hash
