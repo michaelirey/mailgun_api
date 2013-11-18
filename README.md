@@ -11,6 +11,16 @@ mailgun_api exposes the following resources:
 
 ## Usage
 
+#### Installation
+```ruby
+gem install mailgun_api
+```
+
+#### Include in your ruby file(s)
+```ruby
+require 'mailgun_api'
+```
+
 #### Configuration
 ```ruby
 # Initialize your Mailgun object:

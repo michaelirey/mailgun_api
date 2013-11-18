@@ -9,8 +9,8 @@ Gem::Specification.new do |s|
   s.files       = ["lib/mailgun_api.rb", "lib/mailgun/list.rb"]
   # s.files       = `git ls-files`.split("\n")
   s.require_paths = ["lib"]
-  # s.add_dependency(%q<json>, [">= 1.5"])
-  # s.add_dependency(%q<rest-client>, [">= 1.6"])
+  s.add_dependency(%q<json>, [">= 1.5"])
+  s.add_dependency(%q<rest-client>, [">= 1.6"])
   s.homepage    = 'http://rubygems.org/gems/mailgun_api'
   s.license     = 'MIT'
 end
