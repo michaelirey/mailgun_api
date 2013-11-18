@@ -1,9 +1,9 @@
-mailgat rubygem
+mailgun_api rubygem
 =======
 
 A library for interfacing with the Mailgun API
 
-mailgat exposes the following resources:
+mailgun_api exposes the following resources:
 
   * Sending email
   * Mailing Lists
@@ -13,21 +13,21 @@ mailgat exposes the following resources:
 
 #### Configuration
 ```ruby
-# Initialize your Mailgat object:
-@mailgat = Mailgat.new(api_key: 'your-api-key-xxxxxxxxxxxxxxx', domain: 'your_domain.mailgun.org')
+# Initialize your Mailgun object:
+@mailgun = Mailgun.new(api_key: 'your-api-key-xxxxxxxxxxxxxxx', domain: 'your_domain.mailgun.org')
 ```
 
 
 #### Mailing Lists
 ```ruby
 # List all Mailing lists
-@mailgat.lists
+@mailgun.lists
 
 # Find a mailing list
-@list = @mailgat.find_list("list_name")
+@list = @mailgun.find_list("list_name")
 
 # Create a mailing list
-@list = @mailgat.create_list("list_name")
+@list = @mailgun.create_list("list_name")
 
 # Update mailing list properties
 @list.update({description: "My Description"})
@@ -80,12 +80,11 @@ mailgat exposes the following resources:
 #### Messages
 ```ruby
 # Create a message
-@message = @mailgat.create_message({})
+@message = @mailgun.create_message({})
 
 # Send a message to a list
 @list.send_message(@message, when: "Fri, 25 Oct 2011 23:10:10 -0000")
 ```
-
 
 
 ## TODO
@@ -93,12 +92,9 @@ mailgat exposes the following resources:
   * Message sending
 
 
-
 ## Author
 
 Michael Irey / [@michaelirey](http://github.com/michaelirey)
-
-See CONTRIBUTORS.md file for contributor credits.
 
 ## License
 
