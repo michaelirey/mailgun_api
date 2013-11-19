@@ -35,11 +35,11 @@ require 'mailgun_api'
 # List all Mailing lists
 @mailgun.lists
 
-# Find a mailing list
-@list = @mailgun.find_list("list_name")
+# Find a mailing list - Will search for 'list@your_domain.mailgun.org'
+@list = @mailgun.find_list("list")
 
-# Create a mailing list
-@list = @mailgun.create_list("list_name")
+# Create a mailing list - Will create 'list@your_domain.mailgun.org'
+@list = @mailgun.create_list("list")
 
 # Update mailing list properties
 @list.update({description: "My Description"})
@@ -69,13 +69,13 @@ require 'mailgun_api'
 #### List Members
 ```ruby
 # Find a member in the list
-@list.find_member("michael.irey@gmail.com")
+@list.find_member("alice@example.com")
 
 # Add a member to the list (using email address only)
-@list.add_member("michael.irey@gmail.com")
+@list.add_member("alice@example.com")
 
 # Add a member to the list (using hash)
-@list.add_member({address: "michael.irey@gmail.com", name: "Michael Irey"})
+@list.add_member({address: "alice@example.com", name: "Alice Smith"})
 
 # Add multiple members
 @list.add_member([{address: "Alice <alice@example.com>", vars: {age: 26}}, {name: "Bob", address: "bob@example.com", vars: {age: 34} }])

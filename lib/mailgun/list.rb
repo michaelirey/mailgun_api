@@ -22,14 +22,16 @@ module Gun
 
     # List a single mailing list by a given address
     def find(list_name)
-      @mailgun.response = Mailgun.fire(:get, list_url(list_name))
-      @properties = @mailgun.response["list"]
+      response = Mailgun.fire(:get, list_url(list_name))
+      @properties = response["list"]
     end
 
     # Create a mailing list with a given address
     def create(list_name, options={})
       params = {:address => list_name}
       @mailgun.response = Mailgun.fire(:post, list_url, params.merge(options))
+      find(list_name)
+      self
     end
 
     # Update a mailing list with a given address
@@ -37,6 +39,8 @@ module Gun
     def update(params={})
       return unless !params.empty?
       @mailgun.response = Mailgun.fire(:put, list_url(self.address), params)
+      find(self.address)
+      self
     end   
 
     # Deletes a mailing list with a given address
@@ -69,6 +73,7 @@ module Gun
         add_members(params)
       end
 
+      find(self.address)
 
     end
 
@@ -76,6 +81,8 @@ module Gun
     def update_member(address, params={})
       return unless !params.empty?
       @mailgun.response = Mailgun.fire(:put, list_url(self.address) + "/members/#{address}", params)
+      find(self.address)
+      self
     end
 
 
@@ -86,35 +93,9 @@ module Gun
 
     def remove_member(address)
       @mailgun.response = Mailgun.fire(:delete, list_url(self.address) + "/members/#{address}")
+      find(self.address)
+      self
     end
-
-
-
-    # def sync_members(members)
-
-    #   # get all members
-    #   current_members = [] 
-    #   self.members.each do |member|
-    #     hash_member = member.deep_symbolize_keys
-    #     current_members << hash_member
-    #   end
-
-    #   # current_members
-    #   binding.pry
-
-    #   # remove extra members
-
-
-
-    #   # add missing members
-
-
-
-    #   # update changes in users
-
-
-
-    # end
 
 
 
