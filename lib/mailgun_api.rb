@@ -1,6 +1,7 @@
 require "rest-client"
 require "json"
 require "mailgun/list"
+require "mailgun/message"
 
 class Mailgun
 
@@ -27,6 +28,11 @@ class Mailgun
 
   def create_list(list_name, options={})
     Gun::List.new(self).create("#{list_name}@#{domain}", options)
+  end
+
+
+  def create_message(params)
+    Gun::Message.new(params)
   end
 
 

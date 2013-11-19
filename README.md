@@ -83,12 +83,6 @@ require 'mailgun_api'
 ```
 
 
-#### Members
-```ruby
-# find all lists a member belongs to
-@member.lists
-```
-
 #### Messages
 ```ruby
 # Create a message
@@ -97,11 +91,6 @@ require 'mailgun_api'
 # Send a message to a list
 @list.send_message(@message, when: "Fri, 25 Oct 2011 23:10:10 -0000")
 ```
-
-
-## TODO
-
-  * Message sending
 
 
 ## Author

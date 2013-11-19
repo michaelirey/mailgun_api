@@ -98,9 +98,14 @@ module Gun
     end
 
 
+    def send_message(message, params={})
+      params[:to] = self.address
+      params.merge!(message.parameters)
+      @mailgun.response = Mailgun.fire(:post, "#{@mailgun.api_url}/#{@mailgun.domain}/messages", params)
+    end
+
 
     def method_missing(name, *args)
-
       if properties.has_key?(name.to_s)
         @properties[name.to_s]
       end
