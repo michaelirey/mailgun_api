@@ -1,6 +1,7 @@
 require "rest-client"
 require "json"
 require "mailgun/list"
+require "mailgun/error"
 require "mailgun/message"
 
 class Mailgun
@@ -43,14 +44,23 @@ class Mailgun
     
 
   def self.fire(method, url, parameters={})
-
-    parameters = {:params => parameters} if method == :get    
-
-    # puts method
-    # puts url
-    # puts parameters
-
-    return JSON(RestClient.send(method, url, parameters))
+    begin
+      parameters = {:params => parameters} if method == :get    
+      return JSON(RestClient.send(method, url, parameters))
+    rescue => e
+      error_message = nil
+      if e.respond_to? :http_body
+        begin
+          error_message = JSON(e.http_body)["message"]
+        rescue
+          raise e
+        end
+        raise Gun::Error.new(error_message)
+      end
+      raise e
+    end
   end
+
+
 
 end
