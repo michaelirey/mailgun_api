@@ -41,6 +41,9 @@ require 'mailgun_api'
 # Create a mailing list - Will create 'list@your_domain.mailgun.org'
 @list = @mailgun.create_list("list")
 
+# Create a mailing list - With additional properties
+@list = @mailgun.create_list('list_address', {description: "my description", name: "my name"})
+
 # Update mailing list properties
 @list.update({description: "My Description"})
 
