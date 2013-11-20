@@ -54,7 +54,7 @@ require 'mailgun_api'
 # Get the raw list properties
 @list.properties
 
-# Other properties can accessed as well
+# Other properties can be accessed as well
 @list.members_count
 @list.description
 @list.created_at
