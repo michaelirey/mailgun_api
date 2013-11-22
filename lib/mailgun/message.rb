@@ -1,5 +1,5 @@
 
-module Gun
+module Mailgun
 
   class Message
     attr_accessor :parameters

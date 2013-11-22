@@ -25,7 +25,17 @@ require 'mailgun_api'
 
 #### Configuration
 ```ruby
-# Initialize your Mailgun object:
+
+# Initialize Mailgun (set defaults):
+Mailgun.configure do |config|
+  config.api_key = 'your-api-key-xxxxxxxxxxxxxxx'
+  config.domain = 'your_domain.mailgun.org'
+end
+
+@mailgun = Mailgun.new
+
+
+# Initialize Mailgun (custom for each object):
 @mailgun = Mailgun.new(api_key: 'your-api-key-xxxxxxxxxxxxxxx', domain: 'your_domain.mailgun.org')
 ```
 
@@ -83,6 +93,11 @@ require 'mailgun_api'
 # Add multiple members
 @list.add_member([{address: "Alice <alice@example.com>", vars: {age: 26}}, {name: "Bob", address: "bob@example.com", vars: {age: 34} }])
 
+# Update member
+@list.update_member("bob@example.com", {address: "bob@newdomain.com", name: "Robert Smith", subscribed: false})
+
+# Remove member
+@list.remove_member("alice@exampe.com")
 ```
 
 

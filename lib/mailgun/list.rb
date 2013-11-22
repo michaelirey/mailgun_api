@@ -1,6 +1,6 @@
 require 'pry'
 
-module Gun
+module Mailgun
 
   # Mailing List functionality
   # Refer http://documentation.mailgun.net/api-mailinglists.html for optional parameters
@@ -16,19 +16,19 @@ module Gun
 
     # List all mailing lists
     def list(options={})
-      @mailgun.response = Mailgun.fire(:get, list_url, options)["items"] || []
+      @mailgun.response = Mailgun::Base.fire(:get, list_url, options)["items"] || []
     end
 
     # List a single mailing list by a given address
     def find(list_name)
-      response = Mailgun.fire(:get, list_url(list_name))
+      response = Mailgun::Base.fire(:get, list_url(list_name))
       @properties = response["list"]
     end
 
     # Create a mailing list with a given address
     def create(list_name, options={})
       params = {:address => list_name}
-      @mailgun.response = Mailgun.fire(:post, list_url, params.merge(options))
+      @mailgun.response = Mailgun::Base.fire(:post, list_url, params.merge(options))
       find(list_name)
       self
     end
@@ -37,24 +37,24 @@ module Gun
     # with an optional new address, name or description
     def update(params={})
       return unless !params.empty?
-      @mailgun.response = Mailgun.fire(:put, list_url(self.address), params)
+      @mailgun.response = Mailgun::Base.fire(:put, list_url(self.address), params)
       find(self.address)
       self
     end   
 
     # Deletes a mailing list with a given address
     def delete
-      @mailgun.response = Mailgun.fire(:delete, list_url(self.address))
+      @mailgun.response = Mailgun::Base.fire(:delete, list_url(self.address))
     end
 
 
     def members
-      @mailgun.response = Mailgun.fire(:get, list_url(self.address) + "/members")["items"] || []
+      @mailgun.response = Mailgun::Base.fire(:get, list_url(self.address) + "/members")["items"] || []
     end
 
 
     def stats
-      @mailgun.response = Mailgun.fire(:get, list_url(self.address) + "/stats")
+      @mailgun.response = Mailgun::Base.fire(:get, list_url(self.address) + "/stats")
     end
 
 
@@ -79,19 +79,19 @@ module Gun
 
     def update_member(address, params={})
       return unless !params.empty?
-      @mailgun.response = Mailgun.fire(:put, list_url(self.address) + "/members/#{address}", params)
+      @mailgun.response = Mailgun::Base.fire(:put, list_url(self.address) + "/members/#{address}", params)
       find(self.address)
       self
     end
 
 
     def find_member(address)
-      @mailgun.response = Mailgun.fire(:get, list_url(self.address) + "/members/#{address}")
+      @mailgun.response = Mailgun::Base.fire(:get, list_url(self.address) + "/members/#{address}")
     end
 
 
     def remove_member(address)
-      @mailgun.response = Mailgun.fire(:delete, list_url(self.address) + "/members/#{address}")
+      @mailgun.response = Mailgun::Base.fire(:delete, list_url(self.address) + "/members/#{address}")
       find(self.address)
       self
     end
@@ -100,7 +100,7 @@ module Gun
     def send_message(message, params={})
       params[:to] = self.address
       params.merge!(message.parameters)
-      @mailgun.response = Mailgun.fire(:post, "#{@mailgun.api_url}/#{@mailgun.domain}/messages", params)
+      @mailgun.response = Mailgun::Base.fire(:post, "#{@mailgun.api_url}/#{@mailgun.domain}/messages", params)
     end
 
 
@@ -121,18 +121,18 @@ module Gun
       address = params
       params = {}
       params[:address] = address
-      @mailgun.response = Mailgun.fire(:post, list_url(self.address) + "/members", params)
+      @mailgun.response = Mailgun::Base.fire(:post, list_url(self.address) + "/members", params)
     end
 
     def add_member_by_hash(params)
-      @mailgun.response = Mailgun.fire(:post, list_url(self.address) + "/members", params)
+      @mailgun.response = Mailgun::Base.fire(:post, list_url(self.address) + "/members", params)
     end
 
 
     def add_members(members)
       params = {}
       params['members'] = members.to_json
-      @mailgun.response = Mailgun.fire(:post, list_url(self.address) + "/members.json", params)
+      @mailgun.response = Mailgun::Base.fire(:post, list_url(self.address) + "/members.json", params)
     end
 
 
