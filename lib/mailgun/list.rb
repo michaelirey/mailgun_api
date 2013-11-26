@@ -1,5 +1,3 @@
-require 'pry'
-
 module Mailgun
 
   # Mailing List functionality

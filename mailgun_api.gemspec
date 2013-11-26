@@ -6,7 +6,7 @@ Gem::Specification.new do |s|
   s.description = "A library for interfacing with the Mailgun API"
   s.authors     = ["Michael Irey"]
   s.email       = 'michael.irey@gmail.com'
-  s.files       = ["lib/mailgun_api.rb", "lib/mailgun/list.rb", "lib/mailgun/message.rb", "lib/mailgun/error.rb"]
+  s.files       = ["lib/mailgun_api.rb", "lib/mailgun/list.rb", "lib/mailgun/domain.rb", "lib/mailgun/message.rb", "lib/mailgun/error.rb"]
   s.require_paths = ["lib"]
   s.add_dependency(%q<json>, [">= 1.5"])
   s.add_dependency(%q<rest-client>, [">= 1.6"])
