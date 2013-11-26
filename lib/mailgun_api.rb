@@ -1,6 +1,7 @@
 require "rest-client"
 require "json"
 require "mailgun/list"
+require "mailgun/domain"
 require "mailgun/error"
 require "mailgun/message"
 
@@ -108,6 +109,10 @@ module Mailgun
 
     def lists
       Mailgun::List.new(self).list
+    end
+
+    def domains
+      Mailgun::Domain.new(self).list
     end
 
     def create_list(list_name, options={})

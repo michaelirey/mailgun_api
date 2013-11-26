@@ -100,6 +100,11 @@ end
 @list.remove_member("alice@exampe.com")
 ```
 
+#### Domains
+```ruby
+# List domains
+@domains = @mailgun.domains
+```
 
 #### Messages
 ```ruby
