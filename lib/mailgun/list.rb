@@ -130,9 +130,11 @@ module Mailgun
 
 
     def add_members(members)
-      params = {}
-      params['members'] = members.to_json
-      @mailgun.response = Mailgun::Base.fire(:post, list_url(self.address) + "/members.json", params)
+      members.each_slice(1000).each do |members_chunk|
+        params = {}
+        params['members'] = members_chunk.to_json
+        @mailgun.response = Mailgun::Base.fire(:post, list_url(self.address) + "/members.json", params)
+      end
     end
 
 

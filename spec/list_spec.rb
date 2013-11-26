@@ -2,9 +2,18 @@ require "mailgun_api"
 
 # Add a mailgun account credentials here. Should be empty of lists.
 test_account = {
-  api_key: 'key-xxxxxxxxxxxxxxxxxxxxxxx',
-  domain: 'test_account.mailgun.org'
+  api_key: 'key-3jmmuim2ahgb-0jt3kuh2qkw7059qw33',
+  domain: 'evanta.mailgun.org'
 }
+# test_account = {
+#   api_key: 'key-xxxxxxxxxxxxxxxxxxxxxxx',
+#   domain: 'test_account.mailgun.org'
+# }
+
+big_list = []
+(1..1500).each do |x|
+  big_list << "#{x}@example.com"
+end
 
 list_name = "rspec_test"
 
@@ -133,6 +142,23 @@ describe Mailgun::List do
       @mailgun.response["message"].should == "Mailing list member has been deleted"
       @list.members_count.should == 3
     end
+
+    it "Adds more than 1000 members" do
+      @list.add_member(big_list)
+      @mailgun.response["message"].should == "Mailing list has been updated"
+    end
+
+    it "Should be 1503 members" do
+      20.times do |x|
+        sleep 1
+        @list = @mailgun.find_list(list_name)
+        break if @list.members_count == 1503
+      end
+
+
+      @list.members_count.should == 1503
+    end
+
 
     it "Deletes the mailing list" do
       @list.delete
