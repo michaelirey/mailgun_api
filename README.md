@@ -102,8 +102,11 @@ end
 
 #### Domains
 ```ruby
-# List domains
-@domains = @mailgun.domains
+# List all domains
+@mailgun.domains
+
+# List domain specifics
+@mailgun.find_domain("example.com")
 ```
 
 #### Messages
