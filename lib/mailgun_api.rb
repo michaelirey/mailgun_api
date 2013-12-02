@@ -115,6 +115,10 @@ module Mailgun
       Mailgun::Domain.new(self).list
     end
 
+    def find_domain(domain_name)
+      Mailgun::Domain.new(self).list(domain_name)
+    end
+
     def create_list(list_name, options={})
       Mailgun::List.new(self).create("#{list_name}@#{domain}", options)
     end

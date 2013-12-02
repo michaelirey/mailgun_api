@@ -13,9 +13,13 @@ module Mailgun
       @mailgun = mailgun
     end
 
-    # List all domains
-    def list(options={})
-      @mailgun.response = Mailgun::Base.fire(:get, @mailgun.api_url + "/domains")["items"] || []
+    # List Domains. If domain name is passed return detailed information, otherwise return a list of all domains.
+    def list(domain=nil)
+      if domain
+        @mailgun.response = Mailgun::Base.fire(:get, @mailgun.api_url + "/domains/#{domain}")
+      else
+        @mailgun.response = Mailgun::Base.fire(:get, @mailgun.api_url + "/domains")["items"] || []
+      end
     end
 
 	end
